@@ -1,0 +1,6 @@
+.parent-container{
+    width: auto;
+    height: 100%;
+    background-color: var(--primary-bg-color);
+    font-family: var(--text-font);
+}
