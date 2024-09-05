@@ -1,6 +1,6 @@
 :root {
     --text-font:nunito;
-    --primary-bg-color: #efefef;
+    --primary-bg-color: #b49999c0;
 }
 
 .content-container{
@@ -28,12 +28,15 @@
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 20rem;
+    padding:2.5px;
 
 }
 .Custom-button{
     background-color:#f84e02 ;
     border: 3px;
     border-radius: 32px;
+    width:20rem;
 }
 
 .custom-button-font{
@@ -48,13 +51,20 @@
 
 .register-page{
     position: relative;
-    left:7rem;
+    left: 35rem;
 
+  
     min-height: 50vh;
+    width: 60vh;
     margin-top: 6rem;
     font-family: var(--text-font);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .custom-color{
     color:#f84e02
+}
+
+.input-dev{
+    width: 5rem;
 }
 

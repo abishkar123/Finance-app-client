@@ -81,8 +81,9 @@ export const Login = () => {
 
   return (
     <div>
-      <Container>
-        <Form className="mt-3" onSubmit={handleOnSubmit}>
+      <div className='register-page'>
+        <p className='text-2xl font-semibold text-center mt-3'>Login Here!</p>
+        <Form className="mt-3 p-5" onSubmit={handleOnSubmit}>
           {inputs.map((input, idx) => (
             <div className="mb-7 relative" key={idx}>
               <input
@@ -92,7 +93,7 @@ export const Login = () => {
                 onChange={handleOnChange}
                 onFocus={() => handleFocus(input.name)}
                 onBlur={(e) => handleBlur(e, input.name)}
-                className="w-50 p-3 custom-form rounded-lg focus:outline-none"
+                className="p-3 custom-form rounded-lg focus:outline-none"
                 placeholder={input.placeholder}
                 required
               />
@@ -107,7 +108,7 @@ export const Login = () => {
             </div>
           ))}
           <div className="mb-7">
-            <Button className='w-50 p-2.5 Custom-button' type='submit' disabled={isLoading}>
+            <Button className='p-2.5 Custom-button' type='submit' disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Spinner animation="border" role="status" size='sm' aria-hidden="true" />
@@ -129,7 +130,7 @@ export const Login = () => {
             {response.message}
           </div>
         )}
-      </Container>
+      </div>
     </div>
   );
 };

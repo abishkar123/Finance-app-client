@@ -128,13 +128,14 @@ setMessage(validationMessage);
 
   return (
     <div>
-      <Container>
+     
+      <p className='text-3xl font-semibold mt-2 text-center'>Register Here</p>
         <div className='register-page'>
-          <p className='text-3xl font-semibold'>Register Here</p>
          
-            <Form className='mt-5' onSubmit={handleOnSubmit}>
+
+            <Form className='p-5' onSubmit={handleOnSubmit}>
               {inputes.map((input, idx) => (
-                <div className="mb-7 relative" key={idx}>
+                <div className="mb-7 p-2 relative" key={idx}>
                   <input
                     type={input.type}
                     id={input.name}
@@ -143,7 +144,7 @@ setMessage(validationMessage);
                     onChange={handleOnChange}
                     onFocus={() => handleFocus(input.name)}
                     onBlur={(e) => handleBlur(e, input.name)}
-                    className=" w-50 p-3 custom-form rounded-lg focus:outline-none"
+                    className="p-3 custom-form rounded-lg focus:outline-none"
                     placeholder={input.placeholder}
                     required={input.required}
                   />
@@ -159,7 +160,7 @@ setMessage(validationMessage);
               ))}
 
               <div className="mb-7">
-                <Button className='w-50 p-2.5 Custom-button' type='submit' disabled={isLoading}>
+                <Button className='p-2.5 Custom-button' type='submit' disabled={isLoading}>
                   {isLoading ? (
                     <>
                       <Spinner animation="border" role="status" size='sm' aria-hidden="true" />
@@ -178,7 +179,7 @@ setMessage(validationMessage);
             </Form>
           
         </div>
-      </Container>
+      
     </div>
   );
 };
