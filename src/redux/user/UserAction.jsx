@@ -1,13 +1,12 @@
 import { toast } from "react-toastify";
 import { GetUser, postNewUser } from "../../helper/axios"
-import { setUser } from "./UserSlice";
+import { setUser, logout } from "./UserSlice";
 
 export const loginAction = (formDt) => async (dispatch) => {
     try {
       
-  
       const pendingResp = await postNewUser(formDt)
-      console.log(pendingResp)
+    
       const { status, message, user } = pendingResp;
   
       toast[status](message);
@@ -26,6 +25,11 @@ export const loginAction = (formDt) => async (dispatch) => {
       };
     }
   };
+
+export const logoutAction = () => (dispatch)=>{
+    dispatch(logout());
+
+  }
 // export const getAdminProfile =() =>async(dispatch)=>{
 //     const {status, users} = await GetUser();
     

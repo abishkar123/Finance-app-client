@@ -1,12 +1,32 @@
 import React, { useState } from 'react'
 import './Account.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector} from 'react-redux';
+import { toast } from 'react-toastify';
+import { logoutAction } from '../../redux/user/UserAction'
 
 export default function Accountpage() {
     const [show, setShow] = useState(false);
+    const {user} = useSelector((state)=>state.user)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const dispatch = useDispatch()
+           
+    const navigate = useNavigate()
+
+    const handlelogout = (e)=>{
+        e.preventDefault();
+        try {
+        
+            dispatch(logoutAction());
+            navigate('/login');
+            toast.success('Successfully logged out!');
+        } catch (error) {
+          toast.error('Logout Failed!');
+        }
+        }
+    
    
 
   return (
@@ -35,7 +55,9 @@ export default function Accountpage() {
                 </p>
                 <span className='mt-0'>jlkj</span>
                 <Link className='nav-link' to="/my-application">Applications</Link>
-               
+                <button className='' onClick={handlelogout}>
+                 logout
+                </button>
                  
             </div>
         )}

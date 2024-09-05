@@ -5,7 +5,7 @@ import useForm from "./src/redux/form/FormSlice"
 export default configureStore({
   reducer: {
     user: useReducer,
-    form:useForm,
+    form: useForm,
    
   },
 });

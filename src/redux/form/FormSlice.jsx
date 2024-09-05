@@ -15,6 +15,6 @@ const formSlice = createSlice({
 
 const { reducer, actions } = formSlice;
 
-export const { setform, Logout } = actions;
+export const { setform } = actions;
 
 export default reducer;

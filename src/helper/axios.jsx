@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const rootUrl = process.env.NODE_ENV === 'production' 
   ? process.env.REACT_APP_ROOT_API 
   : 'http://localhost:8000/api/v1';
@@ -62,3 +63,32 @@ export const getForm = async () => {
     };
   }
 };
+
+
+export const deleteForm = async (_ids) => {
+  try {
+    console.log(_ids)
+    const {data } = await axios.delete(`${applicationApi}`, {data:_ids});
+    return data;
+  } catch (error) {
+    console.error("Error deleting of lists of your applications:", error); 
+    return {
+      status: 'error',
+      message: error.message,
+    };
+  }
+};
+
+export const updateForm = async (data) => {
+  try {
+    const { rosponse } = await axios.put(`${applicationApi}`, data);
+    return rosponse;
+  } catch (error) {
+    console.error("Error upate of lists of your applications:", error); 
+    return {
+      status: 'error',
+      message: error.message,
+    };
+  }
+};
+

@@ -26,8 +26,10 @@ export const ApplicationForm = () => {
     });
     const dispatch = useDispatch()
 
-    const user = JSON.parse(localStorage.getItem('userInfo'));
-    console.log(user._id)
+   const {user} = useSelector((state)=>state.user)
+   console.log(user)
+
+ 
     
 
     const handleChange = (e) => {
@@ -66,9 +68,16 @@ export const ApplicationForm = () => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
+
+        const {_id, ...rest} = user 
+        console.log(user)
+        const obj = {
+            userId: _id
+        }
+        console.log(obj)
        
         
-        dispatch(CreateFormAction(formData));
+        dispatch(CreateFormAction(formData, obj));
     }
     
 

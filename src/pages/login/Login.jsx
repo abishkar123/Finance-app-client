@@ -1,69 +1,127 @@
-
-import React, { useEffect, useRef, useState } from 'react';
-import { Container, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Form, Spinner, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../redux/user/UserAction';
 
 export const Login = () => {
-  const emailRef = useRef("");
-  const passRef = useRef("");
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  });
+
+  const [focusedFields, setFocusedFields] = useState({
+    email: false,
+    password: false
+  });
+
   const [response, setResponse] = useState("");
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const { user } = useSelector((state) => state.user);
 
-  const {user} = useSelector((state)=> state.user)
-  localStorage.setItem('user', 'user._id');
-  localStorage.setItem('userInfo', JSON.stringify(user)); 
-  
+  useEffect(() => {
+    if (user?._id) {
+      localStorage.setItem('user', user._id);
+      localStorage.setItem('userInfo', JSON.stringify(user));
+      navigate('/home');
+    }
+  }, [user, navigate]);
 
-    useEffect(()=>{
-      if(user?._id){
-        navigate('/home')
-      }
-    }, [user._id, navigate])
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
 
-    const handleOnSubmit = async (e) => {
-      e.preventDefault();
+  const handleFocus = (field) => {
+    setFocusedFields({ ...focusedFields, [field]: true });
+  };
+
+  const handleBlur = (e, field) => {
+    setFocusedFields({ ...focusedFields, [field]: e.target.value !== "" });
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    if (!form.email || !form.password) {
+      setResponse({ status: 'error', message: 'Please fill in both fields' });
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await dispatch(loginAction(form));
+     
+    } catch (err) {
+      setResponse({ status: 'error', message: 'Login failed' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const inputs = [
+    {
+      label: "Email",
+      type: "email",
+      name: "email",
   
-      const formDt = {
-        email: emailRef.current.value,
-        password: passRef.current.value,
-      };
-      console.log(formDt)
-  
-      if (!formDt.email || !formDt.password) {
-        return alert("Please fill in both fields");
-      }
-  
-      try {
-        
-        dispatch(loginAction(formDt))
-      } catch (err) {
-        setResponse({ status: 'error', message: 'Login failed' });
-      }
-    };
+    },
+    {
+      label: "Password",
+      type: "password",
+      name: "password",
+      
+    }
+  ];
 
   return (
     <div>
       <Container>
         <Form className="mt-3" onSubmit={handleOnSubmit}>
-          <input
-            name="email"
-            ref={emailRef}
-            type="email"
-            placeholder="Email"
-            required
-          />
-          <input
-            name="password"
-            ref={passRef}
-            type="password"
-            placeholder="Password"
-            required
-          />
-          <button className="bg-blue-400" type="submit">Login</button>
+          {inputs.map((input, idx) => (
+            <div className="mb-7 relative" key={idx}>
+              <input
+                type={input.type}
+                name={input.name}
+                value={form[input.name]}
+                onChange={handleOnChange}
+                onFocus={() => handleFocus(input.name)}
+                onBlur={(e) => handleBlur(e, input.name)}
+                className="w-50 p-3 custom-form rounded-lg focus:outline-none"
+                placeholder={input.placeholder}
+                required
+              />
+              <label
+                htmlFor={input.name}
+                className={`absolute left-3 top-4 transition-all duration-200 ease-in-out ${
+                  focusedFields[input.name] ? "top-0 text-xs text-gray-600" : "top-4 text-gray-600"
+                }`}
+              >
+                {input.label}
+              </label>
+            </div>
+          ))}
+          <div className="mb-7">
+            <Button className='w-50 p-2.5 Custom-button' type='submit' disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Spinner animation="border" role="status" size='sm' aria-hidden="true" />
+                  <div role='status'>
+                    <span className='visually-hidden'>loading...</span>
+                  </div>
+                </>
+              ) : (
+                <span className='custom-button-font'>
+                  <i className="fa-solid fa-right-to-bracket"></i> Login
+                </span>
+              )}
+            </Button>
+          </div>
         </Form>
 
         {response && (

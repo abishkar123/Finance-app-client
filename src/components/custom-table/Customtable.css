@@ -1,7 +1,5 @@
 .table-container{
     font-family: var(--text-font);
-    width: 100vh;
-    min-height: 30vh;
-    margin-left: 6rem;
+   
 
 }
