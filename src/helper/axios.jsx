@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 
-const rootUrl = process.env.NODE_ENV === 'production' 
-  ? process.env.REACT_APP_ROOT_API 
+const rootUrl = import.meta.env.MODE === 'production' 
+  ? import.meta.env.VITE_ROOT_API 
   : 'http://localhost:8000/api/v1';
+
 
 const clientapi = `${rootUrl}/user`;
 const applicationApi = `${rootUrl}/form`;
