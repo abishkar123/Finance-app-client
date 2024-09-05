@@ -1,5 +1,5 @@
 import Table from 'react-bootstrap/Table';
-import './CustomTable.css';
+import './Customtable.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { deleteApplicationAction, getApplicatonAction } from '../../redux/form/FormAction';
