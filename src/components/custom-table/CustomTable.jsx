@@ -5,11 +5,15 @@ import { useEffect, useState } from 'react';
 import { deleteApplicationAction, getApplicatonAction } from '../../redux/form/FormAction';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import Pagination from 'react-bootstrap/Pagination';
+
+const itemsPerTable = 4;
 
 export const CustomTable = () => {
   const dispatch = useDispatch();
   const [showlists, setShowlists] = useState([]);
   const [ids, setIds] = useState([]);
+  const [active ,setActive]= useState(1)
 
   const { form } = useSelector((state) => state.form);
   const {user} = useSelector((state)=>state.user)
@@ -20,6 +24,25 @@ export const CustomTable = () => {
   // const applicationbyuser = form?.length ? form.filter(item=>item.form._id === _id) :[]
 
   // console.log(applicationbyuser)
+
+  const startItem = (active - 1) * itemsPerTable;
+  const enditem =  startItem + itemsPerTable;
+  
+let items = [];
+const numberOPPage = Math.ceil(showlists.length / itemsPerTable);
+for (let number = 1; number <= numberOPPage; number++) {
+  items.push(
+    <Pagination.Item key={number} active={number === active}
+    onClick={()=>handleonplagination(number)}>
+     
+      {number}
+    </Pagination.Item>,
+  );
+}
+
+const handleonplagination = num =>{
+  setActive(num);
+}
   useEffect(() => {
     
     if(!showlists.length)
@@ -69,6 +92,7 @@ export const CustomTable = () => {
         <tbody>
           {showlists.length > 0 ? (
             showlists.map((item, i) => (
+              i >= startItem && i < enditem && 
               <tr key={item._id}>
 
 
@@ -105,11 +129,15 @@ export const CustomTable = () => {
           )}
         </tbody>
       </Table>
+      <Pagination size='lg'>{items}</Pagination>
 
       {ids.length > 0 && (
         <div className="d-grid mb-4">
-          <button variant="danger" onClick={handleOnDelete}>
-            Delete {ids.length} Selected Items
+          <button className="" onClick={handleOnDelete}>
+           Delete {" "}
+
+             {ids.length} {""}
+              Selected Items
           </button>
         </div>
       )}

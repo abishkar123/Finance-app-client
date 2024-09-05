@@ -1,12 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Account.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
 import { toast } from 'react-toastify';
 import { logoutAction } from '../../redux/user/UserAction'
+import { setUser } from '../../redux/user/UserSlice';
 
 export default function Accountpage() {
     const [show, setShow] = useState(false);
+    
+
+    useEffect(()=>{
+       const userString = localStorage.getItem('userInfo')
+       const user = userString? JSON.parse(userString) : null 
+          if(user?._id){
+           dispatch(setUser(user))
+          
+          }
+      
+        },[])
+
     const {user} = useSelector((state)=>state.user)
 
     const handleClose = () => setShow(false);
@@ -53,10 +66,14 @@ export default function Accountpage() {
                 height="28px" viewBox="0 -960 960 960" width="28px" fill="#0000F5"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
                 
                 </p>
-                <span className='mt-0'>jlkj</span>
-                <Link className='nav-link' to="/my-application">Applications</Link>
-                <button className='' onClick={handlelogout}>
-                 logout
+                <span className='mt-0'>{user.email}</span>
+                <Link className='nav-link mt-3' to="/my-application">Applications</Link>
+                <button className='mt-3' onClick={handlelogout}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0000F5">
+                <title>Logout</title>
+                <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/>
+                </svg>
+
                 </button>
                  
             </div>

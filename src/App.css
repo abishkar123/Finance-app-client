@@ -1,6 +1,6 @@
 :root {
     --text-font:nunito;
-    --primary-bg-color: #b49999c0;
+    --primary-bg-color: #9c949452;
 }
 
 .content-container{
@@ -67,6 +67,9 @@
 .input-dev{
     width: 5rem;
 }
-
+.edit-btn{
+    display: flex;
+    justify-content: right;
+}
 
 

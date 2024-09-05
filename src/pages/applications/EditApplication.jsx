@@ -16,6 +16,7 @@ export const EditApplication = () => {
 
     useEffect(() => {
         dispatch( getApplicatonAction());
+    
     }, [dispatch]);
 
     useEffect(() => {
@@ -30,6 +31,8 @@ export const EditApplication = () => {
                     assets: item.assets,
                     liabilities: item.liabilities,
                 });
+
+                
             }
         }
     }, [form, _id]);
@@ -65,9 +68,13 @@ export const EditApplication = () => {
                 {currentItem && (
                     <>
                         <div className='d-flex flex-column mt-4 p-4 bg-brown-200'>
-                            <Button variant="primary" onClick={() => setEditingSection('personalDetails')}>
-                                Edit Personal Details
-                            </Button>
+                            <div className="edit-btn" onClick={() => setEditingSection('personalDetails')}>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0000F5">
+                            <title>Edit</title>
+                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/>
+                            </svg>
+
+                            </div>
                             {editingSection === 'personalDetails' ? (
                                 <Form className='mt-4 p-4'>
                                     <Form.Group controlId="formFullName">
@@ -120,9 +127,13 @@ export const EditApplication = () => {
                             )}
 
                             <hr />
-                            <Button variant="primary" onClick={() => setEditingSection('income')}>
-                                Edit Income
-                            </Button>
+                            <div className="edit-btn" onClick={() => setEditingSection('income')}>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0000F5">
+                            <title>Edit</title>
+                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/>
+                            </svg>
+
+                            </div>
                             {editingSection === 'income' ? (
                                 <Form className='mt-4 p-4'>
                                     <Form.Group controlId="formSalary">
@@ -163,9 +174,13 @@ export const EditApplication = () => {
                             )}
 
                             <hr />
-                            <Button variant="primary" onClick={() => setEditingSection('expenses')}>
-                                Edit Expenses
-                            </Button>
+                            <div className="edit-btn" onClick={() => setEditingSection('expenses')}>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0000F5">
+                            <title>Edit</title>
+                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/>
+                            </svg>
+
+                            </div>
                             {editingSection === 'expenses' ? (
                                 <Form className='mt-4 p-4'>
                                     <Form.Group controlId="formRent">
@@ -218,13 +233,36 @@ export const EditApplication = () => {
                             )}
 
                             <hr />
-                            <Button variant="primary" onClick={() => setEditingSection('assets')}>
-                                Edit Assets
-                            </Button>
+                           <div className="edit-btn" onClick={() => setEditingSection('assets')}>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0000F5">
+                            <title>Edit</title>
+                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/>
+                            </svg>
+
+                            </div>
                             {editingSection === 'assets' ? (
                                 <Form className='mt-4 p-4'>
                                     <p>Edit assets logic here</p>
-                                    {/* Add appropriate form fields for assets if needed */}
+                                    <Form.Group controlId="formRent">
+                                        <Form.Label>Type</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="type"
+                                            value={formData.expenses?.type|| ''}
+                                            onChange={handleChange}
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group controlId="formRent">
+                                        <Form.Label>Value</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            name="value"
+                                            value={formData.expenses?.value || ''}
+                                            onChange={handleChange}
+                                        />
+                                    </Form.Group>
+                                   
                                     <Button variant="primary" onClick={handleSubmit}>
                                         Save Changes
                                     </Button>
@@ -245,13 +283,37 @@ export const EditApplication = () => {
                             )}
 
                             <hr />
-                            <Button variant="primary" onClick={() => setEditingSection('liabilities')}>
-                                Edit Liabilities
-                            </Button>
+                            <div className="edit-btn" onClick={() => setEditingSection('liabilities')}>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0000F5">
+                            <title>Edit</title>
+                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/>
+                            </svg>
+
+                            </div>
                             {editingSection === 'liabilities' ? (
                                 <Form className='mt-4 p-4'>
                                     <p>Edit liabilities logic here</p>
-                                    {/* Add appropriate form fields for liabilities if needed */}
+
+                                     <Form.Group controlId="formRent">
+                                        <Form.Label>Type</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="type"
+                                            value={formData.liabilities?.type|| ''}
+                                            onChange={handleChange}
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group controlId="formRent">
+                                        <Form.Label>Amout</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            name="value"
+                                            value={formData.liabilities?.amount || ''}
+                                            onChange={handleChange}
+                                        />
+                                    </Form.Group>
+                                    
                                     <Button variant="primary" onClick={handleSubmit}>
                                         Save Changes
                                     </Button>
