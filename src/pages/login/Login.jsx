@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Spinner, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../redux/user/UserAction';
 
@@ -123,7 +123,9 @@ export const Login = () => {
               )}
             </Button>
           </div>
+          <Link  className="no-underline"to="/"> <span className='custom-color'>Register Here!</span></Link>
         </Form>
+        
 
         {response && (
           <div className={`mt-3 ${response.status === 'error' ? 'text-red-500' : 'text-green-500'}`}>
