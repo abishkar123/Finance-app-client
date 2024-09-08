@@ -178,7 +178,7 @@ setMessage(validationMessage);
 
                 
               </div>
-              <Link  className="no-underline"to="/login"> <span className='custom-color'>Login</span></Link>
+              <Link  className="no-underline"to="/"> <span className='custom-color'>Login</span></Link>
             </Form>
           
         </div>
