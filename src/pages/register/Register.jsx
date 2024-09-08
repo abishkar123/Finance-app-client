@@ -5,10 +5,9 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 export const Register = () => {
-  const rootUrl = process.env.NODE_ENV === 'production'
-    ? 'https://your-production-api-url.com/api/v1/user'
-    : 'http://localhost:8000/api/v1/user';
-
+  const rootUrl = import.meta.env.MODE === 'production' 
+  ? import.meta.env.VITE_ROOT_API 
+  : 'http://localhost:8000/api/v1';
   const [form, setForm] = useState({
     fname: '',
     lname: '',
