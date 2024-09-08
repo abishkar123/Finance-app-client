@@ -5,10 +5,13 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 export const Register = () => {
-  const rootUrl = import.meta.env.MODE === 'production' 
-  ? import.meta.env.VITE_ROOT_API 
-  : 'http://localhost:8000/api/v1';
-  
+
+  const rootUrl = "http://finance-backend-env-env.eba-pcmrgz3r.ap-southeast-2.elasticbeanstalk.com/api/v1"
+
+  // const rootUrl = import.meta.env.MODE === 'production'
+  // ? import.meta.env.VITE_ROOT_API
+  // : 'http://localhost:8000/api/v1';
+
   const [form, setForm] = useState({
     fname: '',
     lname: '',

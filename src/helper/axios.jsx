@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-// const rootUrl = "http://finance-backend-env-env.eba-pcmrgz3r.ap-southeast-2.elasticbeanstalk.com/api/v1"
+const rootUrl = "http://finance-backend-env-env.eba-pcmrgz3r.ap-southeast-2.elasticbeanstalk.com/api/v1"
 
-const rootUrl = import.meta.env.MODE === 'production' 
-  ? import.meta.env.VITE_ROOT_API 
-  : 'http://localhost:8000/api/v1';
+// const rootUrl = import.meta.env.MODE === 'production'
+//   ? import.meta.env.VITE_ROOT_API
+//   : 'http://localhost:8000/api/v1';
 
 // const rootUrl = "http://localhost:8000/api/v1"
 
