@@ -33,7 +33,7 @@ export default function Accountpage() {
         try {
         
             dispatch(logoutAction());
-            navigate('/login');
+            navigate('/');
             toast.success('Successfully logged out!');
         } catch (error) {
           toast.error('Logout Failed!');

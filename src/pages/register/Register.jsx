@@ -8,6 +8,7 @@ export const Register = () => {
   const rootUrl = import.meta.env.MODE === 'production' 
   ? import.meta.env.VITE_ROOT_API 
   : 'http://localhost:8000/api/v1';
+  
   const [form, setForm] = useState({
     fname: '',
     lname: '',

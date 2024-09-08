@@ -123,7 +123,7 @@ export const Login = () => {
               )}
             </Button>
           </div>
-          <Link  className="no-underline"to="/"> <span className='custom-color'>Register Here!</span></Link>
+          <Link  className="no-underline"to="/register"> <span className='custom-color'>Register Here!</span></Link>
         </Form>
         
 

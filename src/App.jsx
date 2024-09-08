@@ -29,8 +29,8 @@ function App() {
     <Routes>
 
     
-    <Route path="/login" element={<Login/>}/>
-    <Route path="/" element={<Register/>}/>
+    <Route path="/" element={<Login/>}/>
+    <Route path="/register" element={<Register/>}/>
     <Route path='/home' element={<Home/>}/>
     <Route path='/form' element={<ApplicationForm/>}/>
     <Route path='/my-application' element={<Applications/>}/>
