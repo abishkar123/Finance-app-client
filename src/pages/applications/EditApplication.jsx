@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {  getApplicatonAction, updateApplicationAction } from '../../redux/form/FormAction';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 import '../../App.css';
+import { Header } from '../../components/header/Header';
 
 export const EditApplication = () => {
     const dispatch = useDispatch();
@@ -62,8 +63,10 @@ export const EditApplication = () => {
     };
 
     return (
-        <div className='content-container'>
-            <p className='text-3xl font-semibold text-center p-3'>Application Details:</p>
+        <div>
+            <Header/>
+            <div className='content-container'>
+            <p className='text-3xl font-semibold text-center p-3 text-title'>Application Details:</p>
             <div className='edit-content d-flex flex-column mt-4 p-4'>
                 {currentItem && (
                     <>
@@ -113,7 +116,7 @@ export const EditApplication = () => {
                                 </Form>
                             ) : (
                                 <div className='d-flex flex-column mt-4 p-4'>
-                                    <p>Personal Details:</p>
+                                    <p className='text-title'>Personal Details:</p>
                                     <div className='d-flex justify-content-between'>
                                         <p>Full Name: {currentItem.personalDetails?.fullname}</p>
                                     </div>
@@ -163,7 +166,7 @@ export const EditApplication = () => {
                                 </Form>
                             ) : (
                                 <div className='d-flex flex-column mt-4 p-4'>
-                                    <p>Income:</p>
+                                    <p className='text-title'>Income:</p>
                                     <div className='d-flex justify-content-between'>
                                         <p>Income: ${currentItem.income?.salary}</p>
                                     </div>
@@ -219,7 +222,7 @@ export const EditApplication = () => {
                                 </Form>
                             ) : (
                                 <div className='d-flex flex-column mt-4 p-4'>
-                                    <p>Expenses:</p>
+                                    <p className='text-title'>Expenses:</p>
                                     <div className='d-flex justify-content-between'>
                                         <p>Rent: ${currentItem.expenses?.rent}</p>
                                     </div>
@@ -272,7 +275,7 @@ export const EditApplication = () => {
                                 </Form>
                             ) : (
                                 <div className='p-3'>
-                                    <p>Assets:</p>
+                                    <p className='text-title'>Assets:</p>
                                     {currentItem.assets?.map((asset, index) => (
                                         <div key={index} className='d-flex flex-column'>
                                             <p>Asset Name: {asset?.type}</p>
@@ -323,7 +326,7 @@ export const EditApplication = () => {
                                 </Form>
                             ) : (
                                 <div className='p-3'>
-                                    <p>Liabilities:</p>
+                                    <p className='text-title'>Liabilities:</p>
                                     {currentItem.liabilities?.map((liability, index) => (
                                         <div key={index} className='d-flex flex-column'>
                                             <p>Liability Name: {liability?.type}</p>
@@ -337,5 +340,9 @@ export const EditApplication = () => {
                 )}
             </div>
         </div>
+            
+
+        </div>
+        
     );
 };

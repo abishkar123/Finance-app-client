@@ -1,5 +1,6 @@
 .table-container{
     font-family: var(--text-font);
+    z-index: 0;
    
 
 }

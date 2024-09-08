@@ -6,11 +6,13 @@ import { Link } from 'react-router-dom';
 
 export const Register = () => {
 
-  const rootUrl = "http://finance-backend-env-env.eba-pcmrgz3r.ap-southeast-2.elasticbeanstalk.com/api/v1"
+  // const rootUrl = "http://finance-backend-env-env.eba-pcmrgz3r.ap-southeast-2.elasticbeanstalk.com/api/v1"
 
-  // const rootUrl = import.meta.env.MODE === 'production'
-  // ? import.meta.env.VITE_ROOT_API
-  // : 'http://localhost:8000/api/v1';
+  const rootUrl = import.meta.env.MODE === 'production'
+  ? import.meta.env.VITE_ROOT_API
+  : 'http://localhost:8000/api/v1';
+
+  const clientapi = `${rootUrl}/user`;
 
   const [form, setForm] = useState({
     fname: '',
@@ -29,7 +31,6 @@ export const Register = () => {
     lname: false,
     email: false,
     password: false,
-   
     phonenumber: false,
   });
 
@@ -56,38 +57,13 @@ export const Register = () => {
     });
   };
 
-  const PasswordValidate = (password)=>{
-
-    if(password.length <6){
-        return( "Password must be at least 6 characters long")
-    }
-    if (!/[A-Za-z-]/.test(password)){
-        return ("Password must be contain at least one letter or hyhen")
-    }
-    if (!/\d/.test(password)){}
-    return ("Password is valid")
-};
-
-const handleonPasswordcheck = (event) =>{ 
-  const newPass = event.target.value;
-  setPassword(newPass)
-  const validationMessage = PasswordValidate(newPass)
-  if (validationMessage !== "Password is valid") {
-    toast.error(validationMessage);
-} else {
-    toast.success(validationMessage);
-}
-setMessage(validationMessage);
- 
-};
-
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-   
+   console.log(form)
     try {
-      const response = await axios.post(`${rootUrl}/register`, form);
+      const response = await axios.post(`${clientapi}/register`, form);
+      console.log(response)
       toast('Registration successful:', response.data);
     } catch (error) {
       toast('Registration error:', error.response ? error.response.data : error.message);
@@ -131,11 +107,8 @@ setMessage(validationMessage);
 
   return (
     <div>
-     
-      <p className='text-3xl font-semibold mt-2 text-center'>Register Here</p>
         <div className='register-page'>
-         
-
+        <div className='text-2xl font-semibold text-center p-3'>Register here!</div>
             <Form className='p-5' onSubmit={handleOnSubmit}>
               {inputes.map((input, idx) => (
                 <div className="mb-7 p-2 relative" key={idx}>
@@ -178,7 +151,7 @@ setMessage(validationMessage);
 
                 
               </div>
-              <Link  className="no-underline"to="/"> <span className='custom-color'>Login</span></Link>
+              <Link  className="no-underline"to="/"> <span className='custom-color'>Login!</span></Link>
             </Form>
           
         </div>

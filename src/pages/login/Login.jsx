@@ -82,7 +82,7 @@ export const Login = () => {
   return (
     <div>
       <div className='register-page'>
-        <p className='text-2xl font-semibold text-center mt-3'>Login Here!</p>
+        <p className='text-2xl font-semibold text-center p-3'>Login Here!</p>
         <Form className="mt-3 p-5" onSubmit={handleOnSubmit}>
           {inputs.map((input, idx) => (
             <div className="mb-7 relative" key={idx}>
