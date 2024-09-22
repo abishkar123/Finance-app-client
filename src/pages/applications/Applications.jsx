@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header } from '../../components/header/Header'
-import { CustomTable } from '../../components/custom-table/CustomTable'
+import CustomTable from '../../components/custom-table/CustomTable'
 
 export const Applications = () => {
   return (
@@ -11,7 +11,6 @@ export const Applications = () => {
         <p className='text-xl font-semibold d-flex justify-center mt-3'>My-Applications</p>
         <div>
             <CustomTable/>
-
         </div>
     
         

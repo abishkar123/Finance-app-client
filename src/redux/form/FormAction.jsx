@@ -5,7 +5,7 @@ import { setform } from "./FormSlice";
 
 export const CreateFormAction = (formDt) => async (dispatch) => {
     try {
-      console.log(formDt)
+   
       const pendingResp = await postForm(formDt)
   
       const { status, message} = pendingResp;
@@ -25,10 +25,23 @@ export const CreateFormAction = (formDt) => async (dispatch) => {
     }
   };
 
-export const getApplicatonAction = () => async (dispatch) => {
-    const { status, lists } = await getForm();
+export const getApplicatonAction = (page, limit) => async (dispatch) => {
+    if (page === undefined || limit === undefined) {
+      console.error("Page number and limit must be provided.");
+      return;
+    }
   
-    status === "success" && dispatch(setform(lists));
+    try {
+      const { status, lists, totalPages, totalItems } = await getForm(page, limit);
+      
+      if (status === "success") {
+        dispatch(setform({ lists, totalPages, totalItems}));
+      } else {
+        console.error('Failed to fetch application data:', lists.message);
+      }
+    } catch (error) {
+      console.error('Error dispatching getApplicatonAction:', error.message);
+    }
   };
 
   export const deleteApplicationAction = (arrg) => async (dispatch) => {
@@ -60,4 +73,11 @@ export const getApplicatonAction = () => async (dispatch) => {
     toast[status](message);
   
     status === "success" && dispatch(getApplicatonAction(obj._id));
+  };
+
+
+  export const getSelectedAction = (currentPage, limit) => async (dispatch) => {
+    const { status, lists, currentPage, limit } = await getForm();
+  
+    status === "success" && dispatch(setform(lists,currentPage, limit));
   };

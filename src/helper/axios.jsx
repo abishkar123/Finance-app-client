@@ -55,10 +55,18 @@ export const postForm = async (userData) => {
   }
 };
 
-export const getForm = async () => {
+export const getForm = async (pageNumber, limit) => {
+  if(pageNumber === undefined || limit ==updateForm){
+    throw new Error("Page Number and limit must be provided.")
+  }
   try {
-    const { data } = await axios.get(`${applicationApi}`);
-    return data;
+    const response = await axios.get(`${applicationApi}?page=${pageNumber}&limit=${limit}`);
+    return{
+      status:"success",
+      lists:response.data,
+      totalPages: response.data.totalPages,
+      totalItems:response.data.totalItems,
+    }
   } catch (error) {
     console.error("Error geting lists of applications:", error); 
     return {

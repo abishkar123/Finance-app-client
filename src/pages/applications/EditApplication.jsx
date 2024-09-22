@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import {  getApplicatonAction, updateApplicationAction } from '../../redux/form/FormAction';
+import {  getApplicatonAction, getSelectedAction, updateApplicationAction } from '../../redux/form/FormAction';
 import { Button, Container, Form } from 'react-bootstrap';
 import '../../App.css';
 import { Header } from '../../components/header/Header';
@@ -9,34 +9,39 @@ import { Header } from '../../components/header/Header';
 export const EditApplication = () => {
     const dispatch = useDispatch();
     const { _id } = useParams();
-    const { form } = useSelector((state) => state.form);
-
+   
     const [currentItem, setCurrentItem] = useState(null);
     const [editingSection, setEditingSection] = useState(null);
     const [formData, setFormData] = useState({});
+   
+    const [limit, setLimit] = useState(5); 
+    const {form, currentPage} = useSelector((state)=>state.form)
 
+ 
     useEffect(() => {
-        dispatch( getApplicatonAction());
-    
-    }, [dispatch]);
+       if(currentPage && limit){
+          dispatch(getSelectedAction(currentPage, limit));
+       }
+        
+      }, [dispatch, currentPage, limit]);
 
-    useEffect(() => {
-        if (form.length > 0) {
-            const item = form.find(item => item._id === _id);
-            if (item) {
-                setCurrentItem(item);
-                setFormData({
-                    personalDetails: item.personalDetails,
-                    income: item.income,
-                    expenses: item.expenses,
-                    assets: item.assets,
-                    liabilities: item.liabilities,
-                });
-
-                
-            }
+   console.log(form)
+   
+   useEffect(() => {
+    if (Array.isArray(form.lists) && form.lists.length > 0) {
+        const item = form.lists?.find(item => item._id === _id);
+        if (item) {
+            setCurrentItem(item);
+            setFormData({
+                personalDetails: item.personalDetails,
+                income: item.income,
+                expenses: item.expenses,
+                assets: item.assets,
+                liabilities: item.liabilities,
+            });
         }
-    }, [form, _id]);
+    }
+}, [form.lists, _id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

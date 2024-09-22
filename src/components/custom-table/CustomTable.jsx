@@ -1,113 +1,110 @@
-import Table from 'react-bootstrap/Table';
-import './Customtable.css';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { deleteApplicationAction, getApplicatonAction } from '../../redux/form/FormAction';
+import ReactPaginate from 'react-paginate';
+import { getApplicatonAction, deleteApplicationAction } from '../../redux/form/FormAction';
 import { Link } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
-import Pagination from 'react-bootstrap/Pagination';
+import { Container, Table } from 'react-bootstrap';
+import './Customtable.css'
 
-const itemsPerTable = 4;
-
-export const CustomTable = () => {
+const CustomTable = () => {
   const dispatch = useDispatch();
-  const [showlists, setShowlists] = useState([]);
-  const [ids, setIds] = useState([]);
-  const [active ,setActive]= useState(1)
+  const { form, totalPages } = useSelector((state) => state.form);
 
-  const { form } = useSelector((state) => state.form);
-  const {user} = useSelector((state)=>state.user)
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5); 
+  const [selectedIds, setSelectedIds] = useState([]);
 
-  // const _id = user?._id; 
-  // console.log(_id, form)
+  const [showform, Setshowform] = useState([])
 
-  // const applicationbyuser = form?.length ? form.filter(item=>item.form._id === _id) :[]
-
-  // console.log(applicationbyuser)
-
-  const startItem = (active - 1) * itemsPerTable;
-  const enditem =  startItem + itemsPerTable;
-  
-let items = [];
-const numberOPPage = Math.ceil(showlists.length / itemsPerTable);
-for (let number = 1; number <= numberOPPage; number++) {
-  items.push(
-    <Pagination.Item key={number} active={number === active}
-    onClick={()=>handleonplagination(number)}>
-     
-      {number}
-    </Pagination.Item>,
-  );
-}
-
-const handleonplagination = num =>{
-  setActive(num);
-}
   useEffect(() => {
-    
-    if(!showlists.length)
-      dispatch(getApplicatonAction());{
-        setShowlists(form)
-      }
-   }, [showlists, dispatch, form]);
+    if (page && limit) {
+      dispatch(getApplicatonAction(page, limit));
+    }
+  }, [page, limit, dispatch]);
 
+
+
+  const startItem = (page - 1) * limit;
+  const endItem = startItem + limit;
+
+  const handlePageClick = (selectedPage) => {
+    const newPage = selectedPage.selected + 1;
+    setPage(newPage);
+  };
+
+  const handleLimitChange = (event) => {
+    setLimit(parseInt(event.target.value));
+    setPage(1);
+  };
 
   const handleOnSelect = (e) => {
     const { checked, value } = e.target;
 
     if (value === "all") {
-      checked ? setIds(form.map((item) => item._id)) : setIds([]);
+      checked ? setSelectedIds(form.map((item) => item._id)) : setSelectedIds([]);
       return;
     }
 
     checked
-      ? setIds([...ids, value])
-      : setIds(ids.filter((item) => item !== value));
+      ? setSelectedIds([...selectedIds, value])
+      : setSelectedIds(selectedIds.filter((id) => id !== value));
   };
 
-  const handleOnDelete = ()=>{
-    if (window.confirm("Are you sure you want to delete the application(s)")){
-      dispatch(deleteApplicationAction(ids))
-      setIds([])
+  const handleOnDelete = () => {
+    if (window.confirm("Are you sure you want to delete the application(s)?")) {
+      dispatch(deleteApplicationAction(selectedIds));
+      setSelectedIds([]);
     }
-  }
+  };
+  console.log(form)
 
- 
   return (
     <div className='table-container'>
-       <Container>
-       <Table className='mt-5'>
-        <thead>
-          <tr>
-          <th>
-              #  {""}<input type="checkbox" value="all" onChange={handleOnSelect} />
+      <Container>
+        
+      <div className="mt-4">
+          <label>
+            Items per page:
+            <select value={limit} onChange={handleLimitChange} className="form-select">
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+            </select>
+          </label>
+        </div>
+        <Table className='mt-5'>
+          <thead>
+            <tr>
+              <th>
+                Delete <input type="checkbox" value="all" onChange={handleOnSelect} />
               </th>
-            <th>#</th>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {showlists.length > 0 ? (
-            showlists.map((item, i) => (
-              i >= startItem && i < enditem && 
-              <tr key={item._id}>
+              <th>Item No</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-
-               <td>{i + 1} {""}
-              <input
-                  type="checkbox"
-                  value={item._id}
-                  onChange={handleOnSelect}
-                  checked={ids.includes(item._id)}
-                /></td>
-                <td>{i + 1}</td>
-                <td>{item.personalDetails.fullname}</td>
-                <td>{item.personalDetails.email}</td>
-                <td>{item.personalDetails.phone}</td>
-                <td>
+          <tbody>
+            {form.lists?.length > 0 ? (
+              form.lists.map((item, i) => (
+                <tr key={item._id}>
+                  <td>
+                    {startItem + i + 1}{" "}
+                    <input
+                      type="checkbox"
+                      value={item._id}
+                      onChange={handleOnSelect}
+                      checked={selectedIds.includes(item._id)}
+                    />
+                  </td>
+                  <td>{startItem + i + 1}</td>
+                  <td>{item.personalDetails.fullname}</td>
+                  <td>{item.personalDetails.email}</td>
+                  <td>{item.personalDetails.phone}</td>
+                  <td>
                 <Link to={`/my-application/${item._id}`}>
                 <button variant="warning">
                   <i className="fa-solid fa-pen-to-square"></i>
@@ -117,34 +114,46 @@ const handleonplagination = num =>{
                   
 
                   </td>
-                  
-                   
-
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6">No data available</td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5">No data available</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-      <Pagination size='lg'>{items}</Pagination>
+            )}
+          </tbody>
+        </Table>
 
-      {ids.length > 0 && (
-        <div className="d-grid mb-4">
-          <button className="" onClick={handleOnDelete}>
-           Delete {" "}
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next>"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={totalPages}
+          previousLabel="<previous"
+          renderOnZeroPageCount={null}
+          marginPagesDisplayed={2}
+          containerClassName="pagination justify-content-center"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          activeClassName="active"
+        />
 
-             {ids.length} {""}
-              Selected Items
-          </button>
-        </div>
-      )}
 
-       </Container>
-      
-      
+        {selectedIds.length > 0 && (
+          <div className="d-grid mb-4">
+            <button className="btn btn-danger" onClick={handleOnDelete}>
+              Delete {selectedIds.length} Selected Items
+            </button>
+          </div>
+        )}
+      </Container>
     </div>
   );
-}
+};
+
+export default CustomTable;
