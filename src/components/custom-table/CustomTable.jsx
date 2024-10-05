@@ -56,7 +56,7 @@ const CustomTable = () => {
       setSelectedIds([]);
     }
   };
-  console.log(form)
+ 
 
   return (
     <div className='table-container'>
